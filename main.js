@@ -9,7 +9,11 @@ import uView from '@/uni_modules/uview-ui'
 
 import mixin from './common/mixin'
 
+import tools from './shopro/utils/tools'
+
 Vue.prototype.$store = store
+
+Vue.prototype.$tools = tools
 
 Vue.config.productionTip = false
 
