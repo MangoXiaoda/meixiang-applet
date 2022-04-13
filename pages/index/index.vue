@@ -8,7 +8,7 @@
 		<view class="content-box">
 			<!-- 导航栏 -->
 			<home-head :isScorll="isScorll" borderRadius="0"
-				:navTitle="initShop.name" :list="list"></home-head>
+				navTitle="美香" :list="list"></home-head>
 			<!-- 轮播 -->
 			<!-- <sh-banner :Px="0" :Py="0"
 				:borderRadius="0" :height="530" :list="list">

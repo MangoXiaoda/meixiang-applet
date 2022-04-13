@@ -11,7 +11,21 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO"
+				}
+			},
+			"meta": {
+				"auth": false, //需要登录
+				"async": true, //是否同步
+				"title": "首页", //标题
+				"group": "商城" //分组
 			}
 		},
 		{

@@ -9,7 +9,7 @@
 					<view class="u-icon-wrap u-back-text u-line-1" :style="[navTitleStyle]">{{ navTitle || '' }}</view>
 				</view>
 				<view hover-class="hover-search" class="search-box u-flex u-row-center u-col-center u-m-r-30" @tap="$Router.push('/pages/public/search')">
-					<view class="u-iconfont uicon-search" style="color: #fff"></view>
+					<u-icon name="search" color="#fff" size="22"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -57,7 +57,7 @@ export default {
 		},
 		navTitle: {
 			type: String,
-			default: 'Shopro商城'
+			default: '商城'
 		},
 		navTitleStyle: {
 			type: Object,
@@ -169,5 +169,180 @@ export default {
 	flex: 1;
 	flex-grow: 0;
 	padding: 14rpx 14rpx 14rpx 24rpx;
+}
+/* ==================
+         轮播
+ ==================== */
+swiper .a-swiper-dot {
+	display: inline-block;
+	width: 16upx;
+	height: 16upx;
+	background: rgba(0, 0, 0, .3);
+	border-radius: 50%;
+	vertical-align: middle;
+}
+
+swiper[class*="-dot"] .wx-swiper-dots,
+swiper[class*="-dot"] .a-swiper-dots,
+swiper[class*="-dot"] .uni-swiper-dots {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
+}
+
+swiper.square-dot .wx-swiper-dot,
+swiper.square-dot .a-swiper-dot,
+swiper.square-dot .uni-swiper-dot {
+	background-color: #ffffff;
+	opacity: 0.4;
+	width: 10upx;
+	height: 10upx;
+	border-radius: 20upx;
+	margin: 0 8upx !important;
+}
+
+swiper.square-dot .wx-swiper-dot.wx-swiper-dot-active,
+swiper.square-dot .a-swiper-dot.a-swiper-dot-active,
+swiper.square-dot .uni-swiper-dot.uni-swiper-dot-active {
+	opacity: 1;
+	width: 30upx;
+}
+
+swiper.round-dot .wx-swiper-dot,
+swiper.round-dot .a-swiper-dot,
+swiper.round-dot .uni-swiper-dot {
+	width: 10upx;
+	height: 10upx;
+	position: relative;
+	margin: 4upx 8upx !important;
+}
+
+swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active::after,
+swiper.round-dot .a-swiper-dot.a-swiper-dot-active::after,
+swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active::after {
+	content: "";
+	position: absolute;
+	width: 10upx;
+	height: 10upx;
+	top: 0upx;
+	left: 0upx;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	background-color: #ffffff;
+	border-radius: 20upx;
+}
+
+swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active,
+swiper.round-dot .a-swiper-dot.a-swiper-dot-active,
+swiper.round-dot .uni-swiper-dot.uni-swiper-dot-active {
+	width: 18upx;
+	height: 18upx;
+}
+
+.screen-swiper {
+	min-height: 375upx;
+}
+
+.screen-swiper image,
+.screen-swiper video,
+.swiper-item image,
+.swiper-item video {
+	width: 100%;
+	display: block;
+	height: 100%;
+	margin: 0;
+	pointer-events: none;
+}
+
+.card-swiper {
+	height: 420upx !important;
+}
+
+
+.card-swiper swiper-item {
+	width: 610upx !important;
+	left: 70upx;
+	box-sizing: border-box;
+	padding: 40upx 0upx 70upx;
+	overflow: initial;
+}
+
+.card-swiper swiper-item .swiper-item {
+	width: 100%;
+	display: block;
+	height: 100%;
+	border-radius: 10upx;
+	transform: scale(0.9);
+	transition: all 0.2s ease-in 0s;
+	overflow: hidden;
+}
+
+.card-swiper swiper-item.cur .swiper-item {
+	transform: none;
+	transition: all 0.2s ease-in 0s;
+}
+
+
+.tower-swiper {
+	height: 420upx;
+	position: relative;
+	max-width: 750upx;
+	overflow: hidden;
+}
+
+.tower-swiper .tower-item {
+	position: absolute;
+	width: 300upx;
+	height: 380upx;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	margin: auto;
+	transition: all 0.2s ease-in 0s;
+	opacity: 1;
+}
+
+.tower-swiper .tower-item.none {
+	opacity: 0;
+}
+
+.tower-swiper .tower-item .swiper-item {
+	width: 100%;
+	height: 100%;
+	border-radius: 6upx;
+	overflow: hidden;
+}
+
+/* ==================
+         搜索框样式
+ ==================== */
+.u-m-r-30 {
+  margin-right: 30rpx !important;
+}
+.u-col-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.u-row-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.u-flex {
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 </style>
