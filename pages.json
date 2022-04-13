@@ -41,11 +41,26 @@
 			}
 		}
 	],
-	"subPackages": [],
+	"subPackages": [{
+			"root": "pages/public",
+			"pages": [{
+				"path": "search",
+				"style": {
+					"navigationBarTitleText": "搜索"
+				},
+				"meta": {
+					"auth": false,
+					"async": true,
+					"title": "搜索",
+					"group": "通用"
+				}
+			}
+		]
+	}],
 	"preloadRule": {
 		"pages/index/index": {
 			"network": "all",
-			"packages": []
+			"packages": ["pages/public"]
 		}
 	},
 	"globalStyle": {

@@ -8,7 +8,7 @@
 				<view class="u-back-wrap">
 					<view class="u-icon-wrap u-back-text u-line-1" :style="[navTitleStyle]">{{ navTitle || '' }}</view>
 				</view>
-				<view hover-class="hover-search" class="search-box u-flex u-row-center u-col-center u-m-r-30" @tap="$Router.push('/pages/public/search')">
+				<view hover-class="hover-search" class="search-box u-flex u-row-center u-col-center u-m-r-30" @click="toSearch()">
 					<u-icon name="search" color="#fff" size="22"></u-icon>
 				</view>
 			</view>
@@ -112,6 +112,12 @@ export default {
 		},
 		onChange(e) {
 			this.swiperCur = e.detail.current;
+		},
+		// 跳转到搜索页
+		toSearch() {
+			uni.navigateTo({
+				url:'/pages/public/search'
+			})
 		}
 	}
 };

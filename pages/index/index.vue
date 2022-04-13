@@ -9,24 +9,18 @@
 			<!-- 导航栏 -->
 			<home-head :isScorll="isScorll" borderRadius="0"
 				navTitle="美香" :list="list"></home-head>
-			<!-- 轮播 -->
-			<!-- <sh-banner :Px="0" :Py="0"
-				:borderRadius="0" :height="530" :list="list">
-			</sh-banner> -->
+		
 			
 		</view>
 	</view>
 </template>
 
 <script>
-	import shBanner from './components/sh-banner.vue';
 	
 	import homeHead from './index/home-head.vue';
 	
 	export default {
 		components: {
-			shBanner,
-			
 			homeHead
 		},
 		data() {
