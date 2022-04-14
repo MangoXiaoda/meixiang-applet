@@ -111,6 +111,8 @@ export default {
 	methods: {
 		// 瀑布流相关
 		async splitData() {
+			console.log('进来了么666666')
+			console.log(this.tempList)
 			if (!this.tempList.length) return;
 			let item = this.tempList[0];
 			if (!item) return;
@@ -148,15 +150,35 @@ export default {
 			let that = this;
 			that.$http('goods.lists', this.listParams).then(res => {
 				if (res.code === 1) {
-					this.lastPage = res.data.last_page;
-					this.total = res.data.total;
-					this.perPage = res.data.per_page;
-					this.isRefresh = false;
-					that.goodsList = [...that.goodsList, ...res.data.data];
-					that.tempList = res.data.data;
-					that.goodsList.length && that.splitData();
+					// this.lastPage = res.data.last_page;
+					// this.total = res.data.total;
+					// this.perPage = res.data.per_page;
+					// this.isRefresh = false;
+					// that.goodsList = [...that.goodsList, ...res.data.data];
+					// that.tempList = res.data.data;
+					// that.goodsList.length && that.splitData();
 				}
 			});
+		},
+		
+		getGoodsList() {
+			let that = this;
+			let params = {
+				goods_ids: "33,32,31,29,28,25"
+			}
+			
+			this.$store.dispatch('goods/List', params).then(res => {
+				res = this.$store.state.goods.goodsList
+				console.log('res111', res)
+				this.lastPage = res.data.last_page;
+				this.total = res.data.total;
+				this.perPage = res.data.per_page;
+				this.isRefresh = false;
+				that.goodsList = [...that.goodsList, ...res.data.data];
+				that.tempList = res.data.data;
+				that.goodsList.length && that.splitData();
+			})
+			
 		},
 
 		// 加载更多
