@@ -1,39 +1,15 @@
 <template>
 	<!-- 为你推荐 -->
 	<view class="hot-goods u-m-b-10 u-p-x-16">
-		<view class="u-waterfall" v-if="goodsType === 1">
-			<view id="u-left-column" class="u-column">
-				<view class="goods-item u-m-b-16 u-flex u-row-center u-col-center" v-for="leftGoods in leftList" :key="leftGoods.id">
-					<shopro-goods-card
-						:detail="leftGoods"
-						:type="leftGoods.activity_type"
-						:image="leftGoods.image"
-						:title="leftGoods.title"
-						:subtitle="leftGoods.subtitle"
-						:price="leftGoods.price"
-						:originPrice="leftGoods.original_price"
-						:sales="leftGoods.sales"
-						:tagTextList="leftGoods.activity_discounts_tags"
-						@click="$Router.push({ path: '/pages/goods/detail', query: { id: leftGoods.id } })"
-					></shopro-goods-card>
-				</view>
-			</view>
-			<view id="u-right-column" class="u-column">
-				<view class="goods-item  u-m-b-16 u-flex u-row-center u-col-center" v-for="rightGoods in rightList" :key="rightGoods.id">
-					<shopro-goods-card
-						:detail="rightGoods"
-						:type="rightGoods.activity_type"
-						:image="rightGoods.image"
-						:title="rightGoods.title"
-						:subtitle="rightGoods.subtitle"
-						:price="rightGoods.price"
-						:originPrice="rightGoods.original_price"
-						:sales="rightGoods.sales"
-						:tagTextList="rightGoods.activity_discounts_tags"
-						@click="$Router.push({ path: '/pages/goods/detail', query: { id: rightGoods.id } })"
-					></shopro-goods-card>
-				</view>
-			</view>
+		<view class="warp">
+			<u-waterfall v-model="goodsList" ref="uWaterfall">
+				<template v-slot:left="{leftList}">
+					<view>111111</view>
+				</template>
+				<template v-slot:right="{rightList}">
+					<view>222222</view>
+				</template>
+			</u-waterfall>
 		</view>
 		<!-- m -->
 		<view class="big-card-wrap u-p-10" v-if="goodsType === 2">
@@ -111,8 +87,6 @@ export default {
 	methods: {
 		// 瀑布流相关
 		async splitData() {
-			console.log('进来了么666666')
-			console.log(this.tempList)
 			if (!this.tempList.length) return;
 			let item = this.tempList[0];
 			if (!item) return;
@@ -146,10 +120,10 @@ export default {
 		},
 
 		// 商品列表
-		getGoodsList() {
-			let that = this;
-			that.$http('goods.lists', this.listParams).then(res => {
-				if (res.code === 1) {
+		// getGoodsList() {
+		// 	let that = this;
+		// 	that.$http('goods.lists', this.listParams).then(res => {
+		// 		if (res.code === 1) {
 					// this.lastPage = res.data.last_page;
 					// this.total = res.data.total;
 					// this.perPage = res.data.per_page;
@@ -157,11 +131,12 @@ export default {
 					// that.goodsList = [...that.goodsList, ...res.data.data];
 					// that.tempList = res.data.data;
 					// that.goodsList.length && that.splitData();
-				}
-			});
-		},
+				// }
+		// 	});
+		// },
 		
 		getGoodsList() {
+			console.log(this.$u.config.v);
 			let that = this;
 			let params = {
 				goods_ids: "33,32,31,29,28,25"
@@ -177,8 +152,9 @@ export default {
 				that.goodsList = [...that.goodsList, ...res.data.data];
 				that.tempList = res.data.data;
 				that.goodsList.length && that.splitData();
-			})
-			
+				console.log('leftList', this.leftList)
+				console.log('rightList', this.rightList)
+			});
 		},
 
 		// 加载更多
