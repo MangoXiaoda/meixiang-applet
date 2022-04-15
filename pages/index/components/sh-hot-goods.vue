@@ -1,10 +1,13 @@
 <template>
 	<!-- 为你推荐 -->
 	<view class="hot-goods u-m-b-10 u-p-x-16">
-		<view class="warp">
+		<view class="warp" v-if="goodsType === 1">
 			<u-waterfall v-model="goodsList" ref="uWaterfall">
+				<view>手动瀑布流</view>
 				<template v-slot:left="{leftList}">
-					<view>111111</view>
+					<view v-for="(item, index) in leftList" :key="index">
+						<view>1111</view>
+					</view>
 				</template>
 				<template v-slot:right="{rightList}">
 					<view>222222</view>
@@ -60,8 +63,8 @@ export default {
 			addTime: 100, //排序间隙时间
 			leftHeight: 0,
 			rightHeight: 0,
-			leftList: [],
-			rightList: [],
+			// leftList: [],
+			// rightList: [],
 			tempList: [],
 
 			goodsType: this.detail.style // 商品模板
@@ -75,14 +78,14 @@ export default {
 		}
 	},
 	created() {
-		if (this.detail.id) {
-			this.listParams.category_id = this.detail.id;
-			this.getGoodsList();
-		}
-		if (this.detail.ids) {
-			this.listParams.goods_ids = this.detail.ids;
-			this.getGoodsList();
-		}
+		// if (this.detail.id) {
+		// 	this.listParams.category_id = this.detail.id;
+		// 	this.getGoodsList();
+		// }
+		// if (this.detail.ids) {
+		// 	this.listParams.goods_ids = this.detail.ids;
+		// 	this.getGoodsList();
+		// }
 	},
 	methods: {
 		// 瀑布流相关
@@ -149,9 +152,11 @@ export default {
 				this.total = res.data.total;
 				this.perPage = res.data.per_page;
 				this.isRefresh = false;
-				that.goodsList = [...that.goodsList, ...res.data.data];
-				that.tempList = res.data.data;
-				that.goodsList.length && that.splitData();
+				// that.goodsList = [...that.goodsList, ...res.data.data];
+				// that.tempList = res.data.data;
+				// that.goodsList.length && that.splitData();
+				that.goodsList = res.data.data;
+				console.log('goodsList', this.goodsList)
 				console.log('leftList', this.leftList)
 				console.log('rightList', this.rightList)
 			});
