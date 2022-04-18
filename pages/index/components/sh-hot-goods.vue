@@ -1,21 +1,23 @@
 <template>
 	<!-- 为你推荐 -->
 	<view class="hot-goods u-m-b-10 u-p-x-16">
-		<view class="warp" v-if="goodsType === 1">
+		<view class="warp" v-if="goodsType === 2">
 			<u-waterfall v-model="goodsList" ref="uWaterfall">
-				<view>手动瀑布流</view>
+				<!-- <view>手动瀑布流</view> -->
 				<template v-slot:left="{leftList}">
 					<view v-for="(item, index) in leftList" :key="index">
 						<view>1111</view>
 					</view>
 				</template>
 				<template v-slot:right="{rightList}">
-					<view>222222</view>
+					<view v-for="(item, index) in rightList" :key="index">
+						<view>2222</view>
+					</view>
 				</template>
 			</u-waterfall>
 		</view>
 		<!-- m -->
-		<view class="big-card-wrap u-p-10" v-if="goodsType === 2">
+		<view class="big-card-wrap u-p-10" v-if="goodsType === 1">
 			<block v-for="item in goodsList" :key="item.id">
 				<sh-goods-card
 					:detail="item"
@@ -63,9 +65,10 @@ export default {
 			addTime: 100, //排序间隙时间
 			leftHeight: 0,
 			rightHeight: 0,
-			// leftList: [],
-			// rightList: [],
+			leftList: [],
+			rightList: [],
 			tempList: [],
+			list: [],
 
 			goodsType: this.detail.style // 商品模板
 		};
@@ -78,15 +81,16 @@ export default {
 		}
 	},
 	created() {
-		// if (this.detail.id) {
-		// 	this.listParams.category_id = this.detail.id;
-		// 	this.getGoodsList();
-		// }
-		// if (this.detail.ids) {
-		// 	this.listParams.goods_ids = this.detail.ids;
-		// 	this.getGoodsList();
-		// }
+		if (this.detail.id) {
+			this.listParams.category_id = this.detail.id;
+			this.getGoodsList();
+		}
+		if (this.detail.ids) {
+			this.listParams.goods_ids = this.detail.ids;
+			this.getGoodsList();
+		}
 	},
+		
 	methods: {
 		// 瀑布流相关
 		async splitData() {
@@ -122,6 +126,25 @@ export default {
 			this.tempList = [];
 		},
 
+		// addRandomData() {
+		// 	console.log('length', this.list.length)
+		// 	for(let i = 0; i < this.list.length; i++) {
+		// 		let index = this.$u.random(0, this.list.length - 1);
+		// 		// 先转成字符串再转成对象，避免数组对象引用导致数据混乱
+		// 		let item = JSON.parse(JSON.stringify(this.list[index]))
+		// 		console.log('item', item)
+		// 		item.id = this.$u.guid();
+		// 		this.goodsList.push(item);
+		// 	}
+		// 	console.log('转化后的goodsList',this.goodsList)
+		// },
+		// remove(id) {
+		// 	this.$refs.uWaterfall.remove(id);
+		// },
+		// clear() {
+		// 	this.$refs.uWaterfall.clear();
+		// },
+
 		// 商品列表
 		// getGoodsList() {
 		// 	let that = this;
@@ -142,23 +165,20 @@ export default {
 			console.log(this.$u.config.v);
 			let that = this;
 			let params = {
-				goods_ids: "33,32,31,29,28,25"
+				goods_ids: "33,32,31,29"
 			}
 			
 			this.$store.dispatch('goods/List', params).then(res => {
 				res = this.$store.state.goods.goodsList
-				console.log('res111', res)
+				
 				this.lastPage = res.data.last_page;
 				this.total = res.data.total;
 				this.perPage = res.data.per_page;
 				this.isRefresh = false;
-				// that.goodsList = [...that.goodsList, ...res.data.data];
-				// that.tempList = res.data.data;
-				// that.goodsList.length && that.splitData();
-				that.goodsList = res.data.data;
-				console.log('goodsList', this.goodsList)
-				console.log('leftList', this.leftList)
-				console.log('rightList', this.rightList)
+				that.list = res.data.data;
+				that.goodsList = [...that.goodsList, ...res.data.data];
+				that.tempList = res.data.data;
+				that.goodsList.length && that.splitData();
 			});
 		},
 
@@ -226,5 +246,12 @@ export default {
 		transform: rotate(360deg);
 		transition: all linear 0.5s;
 	}
+}
+
+/* ==================
+    当前页面追加样式
+ ==================== */
+.u-p-10 {
+  padding: 10rpx !important;
 }
 </style>
