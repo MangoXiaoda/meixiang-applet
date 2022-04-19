@@ -6,7 +6,7 @@
 		<view class=" card-right u-m-l-20 u-flex-col u-row-between">
 			<view class="">
 				<view class="goods-title u-ellipsis-1 u-m-t-10 u-m-b-10">
-					<view v-if="type" class=" sm cu-tag radius title-tag u-m-r-10"
+					<view class=" sm cu-tag radius title-tag u-m-r-10"
 						:style="{ backgroundColor: '#FF5854', color: '#fff' }">热销</view>
 					{{ title }}
 				</view>
@@ -30,7 +30,7 @@
 				<!-- 加入购物车 -->
 				<view class="cart-box">
 					<!-- 多规格 -->
-					<button class="u-reset-button item-btn buy-btn" style="#FF5854" @tap.stop="selSku(detail)">
+					<button class="u-reset-button item-btn buy-btn" style="#FF5854" @tap.stop="toGoodsDetail(detail)">
 						购买
 					</button>
 				</view>
@@ -108,7 +108,14 @@
 		},
 		mounted() {},
 		methods: {
-	
+			
+			// 跳转到商品详情页
+			toGoodsDetail() {
+				uni.navigateTo({
+					url:'/pages/goods/detail'
+				})
+			}
+			
 		}
 	};
 </script>

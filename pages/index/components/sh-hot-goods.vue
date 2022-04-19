@@ -1,10 +1,10 @@
 <template>
 	<!-- 为你推荐 -->
 	<view class="hot-goods u-m-b-10 u-p-x-16">
-		<view class="warp" v-if="goodsType === 2">
-			<u-waterfall v-model="goodsList" ref="uWaterfall">
+		<!-- <view class="warp" v-if="goodsType === 2"> -->
+			<!-- <u-waterfall v-model="goodsList" ref="uWaterfall"> -->
 				<!-- <view>手动瀑布流</view> -->
-				<template v-slot:left="{leftList}">
+		<!-- 		<template v-slot:left="{leftList}">
 					<view v-for="(item, index) in leftList" :key="index">
 						<view>1111</view>
 					</view>
@@ -13,23 +13,23 @@
 					<view v-for="(item, index) in rightList" :key="index">
 						<view>2222</view>
 					</view>
-				</template>
-			</u-waterfall>
-		</view>
+				</template> -->
+			<!-- </u-waterfall> -->
+		<!-- </view> -->
 		<!-- m -->
-		<view class="big-card-wrap u-p-10" v-if="goodsType === 1">
+		<view class="big-card-wrap u-p-10">
 			<block v-for="item in goodsList" :key="item.id">
 				<sh-goods-card
 					:detail="item"
 					:type="item.activity_type"
-					:image="item.image"
+					:image="item.thumb"
 					:title="item.title"
-					:subtitle="item.subtitle"
+					:subtitle="item.content"
 					:price="item.price"
-					:originPrice="item.original_price"
+					:originPrice="item.cost_price"
 					:sales="item.sales"
 					:tagTextList="item.activity_discounts_tags"
-					@click="$Router.push({ path: '/pages/goods/detail', query: { id: item.id } })"
+					@click="toGoodsDetail()"
 				></sh-goods-card>
 			</block>
 		</view>
@@ -70,7 +70,7 @@ export default {
 			tempList: [],
 			list: [],
 
-			goodsType: this.detail.style // 商品模板
+			// goodsType: this.detail.style // 商品模板
 		};
 	},
 
@@ -165,20 +165,20 @@ export default {
 			console.log(this.$u.config.v);
 			let that = this;
 			let params = {
-				goods_ids: "33,32,31,29"
+				
 			}
 			
 			this.$store.dispatch('goods/List', params).then(res => {
 				res = this.$store.state.goods.goodsList
-				
+				console.log('res111', res)
 				this.lastPage = res.data.last_page;
 				this.total = res.data.total;
 				this.perPage = res.data.per_page;
 				this.isRefresh = false;
-				that.list = res.data.data;
+				// that.list = res.data.data;
 				that.goodsList = [...that.goodsList, ...res.data.data];
-				that.tempList = res.data.data;
-				that.goodsList.length && that.splitData();
+				// that.tempList = res.data.data;
+				// that.goodsList.length && that.splitData();
 			});
 		},
 
@@ -199,7 +199,15 @@ export default {
 					this.getGoodsList();
 				}
 			}
+		},
+		
+		// 跳转到商品详情页
+		toGoodsDetail() {
+			uni.navigateTo({
+				url:'/pages/goods/detail'
+			})
 		}
+		
 	}
 };
 </script>

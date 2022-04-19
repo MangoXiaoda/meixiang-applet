@@ -55,8 +55,25 @@
 					"group": "通用"
 				}
 			}
-		]
-	}],
+		]},
+		{
+			"root":"pages/goods",
+			"pages": [{
+				"path": "detail",
+				"style": {
+					"navigationBarTitleText": "商品详情",
+					"navigationStyle": "custom"
+				},
+				"meta": {
+					"auth": false,
+					"async": true,
+					"title": "商品详情",
+					"group": "商品"
+				}
+			}]
+		}
+		
+	],
 	"preloadRule": {
 		"pages/index/index": {
 			"network": "all",

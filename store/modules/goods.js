@@ -17,8 +17,7 @@ export default {
 			commit,
 			state
 		},params) {
-			console.log('进来了么？')
-			let result = await request.get('https://demo.shopro.top/addons/shopro/goods/lists', {
+			let result = await request.get('https://www.meixiang.online/api/goods/list', {
 				data: params
 			}) 
 			commit('set_goodsList', result.data)
