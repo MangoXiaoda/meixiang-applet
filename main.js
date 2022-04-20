@@ -1,11 +1,7 @@
 import Vue from 'vue'
-import App from './App'
-// vuex
 import store from './store'
+import App from './App'
 import request from '@/common/request/request.js'
-
-// 引入全局uView
-import uView from 'uview-ui'
 
 import tools from './shopro/utils/tools'
 
@@ -19,11 +15,13 @@ Vue.prototype.$request = request;
 Vue.config.productionTip = false
 
 App.mpType = 'app'
-Vue.use(uView)
+// 引入全局uView
+import uView from "uview-ui"
+Vue.use(uView);
 
 const app = new Vue({
-    store,
-    ...App
+	  ...App,
+    store
 })
 
 // 引入请求封装

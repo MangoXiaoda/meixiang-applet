@@ -1,11 +1,89 @@
 <!-- 商品详情 -->
 <template>
 	<view class="detail-wrap">
+		<!-- 标题栏 -->
+		<view class="nav-box">
+			<view :style="{ height: navbarHeight + 'px' }">
+				<view hover-class="back-hover" class="back-box u-m-x-30 u-flex u-row-center u-col-center" @tap="goBack">
+					<view class="u-iconfont uicon-arrow-left" style="color: #fff;font-size: 28rpx;"></view>
+				</view>
+			</view>
+		</view>
+		
+		<view class="detail_box">
+			<view class="detail-content">
+				<!-- 轮播 -->
+				<u-swiper :height="750" borderRadius="0" :list="goodsInfo.images" indicator-pos="bottomRight" mode="number" :interval="3000"></u-swiper>
+			</view>
+		</view>
+		
+		
 		
 	</view>
 </template>
 
 <script>
+let systemInfo = uni.getSystemInfoSync();
+	
+export default {
+	
+	data() {
+		return {
+			gs_id: 0, // 商品id
+			goodsInfo: []
+		}
+	},
+	
+	onLoad(options) {
+		this.gs_id = options.id
+		this.getGoodsDetail()
+	},
+	
+	computed: {
+		navbarHeight() {
+			// #ifdef APP-PLUS || H5
+			return 48;
+			// #endif
+			// #ifdef MP
+			let height = systemInfo.platform == 'ios' ? 44 : 48;
+			return height;
+			// #endif
+		}
+	},
+	
+	methods: {
+		// 返回
+		goBack() {
+			uni.navigateBack();
+		},
+		
+		// 商品详情
+		getGoodsDetail() {
+			let that = this
+			const params = {
+				gs_id: that.gs_id
+			}
+			
+		   uni.request({
+			url: 'https://www.meixiang.online/api/goods/detail', 
+			method: 'GET',
+			header: {  
+				'content-type': 'application/json', 
+			 'Authorization' : 'Bearer ' + uni.getStorageSync('token')
+			  },   
+			   data: params,
+			   success: (res) => {
+				   that.goodsInfo = res.data.data
+				   console.log(that.goodsInfo)
+				   console.log(that.goodsInfo.images)
+			   }
+		   });
+		}
+		
+	}
+	
+}
+	
 </script>
 
 <style lang="scss">

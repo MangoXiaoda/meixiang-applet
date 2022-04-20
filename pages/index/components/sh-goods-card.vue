@@ -108,11 +108,15 @@
 		},
 		mounted() {},
 		methods: {
+			//点击商品
+			click() {
+				this.$emit('click');
+			},
 			
 			// 跳转到商品详情页
-			toGoodsDetail() {
+			toGoodsDetail(info) {
 				uni.navigateTo({
-					url:'/pages/goods/detail'
+					url:'/pages/goods/detail?id=' + info.id
 				})
 			}
 			

@@ -2,7 +2,7 @@
 	<view class="page_box">
 		<!-- 搜索框 -->
 		<view class="head_box">
-			<u-search v-model="searchVal" margin="30rpx" placeholder="搜索商品" height="64" @search="onSearch" @custom="onSearch" @clear="clearSearch"></u-search>
+			<!-- <u-search v-model="searchVal" margin="30rpx" placeholder="搜索商品" height="64" @search="onSearch" @custom="onSearch" @clear="clearSearch"></u-search> -->
 		</view>
 	</view>
 </template>

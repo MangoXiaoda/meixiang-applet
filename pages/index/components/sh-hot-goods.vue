@@ -29,7 +29,7 @@
 					:originPrice="item.cost_price"
 					:sales="item.sales"
 					:tagTextList="item.activity_discounts_tags"
-					@click="toGoodsDetail()"
+					@click="toGoodsDetail(item.id)"
 				></sh-goods-card>
 			</block>
 		</view>
@@ -170,7 +170,6 @@ export default {
 			
 			this.$store.dispatch('goods/List', params).then(res => {
 				res = this.$store.state.goods.goodsList
-				console.log('res111', res)
 				this.lastPage = res.data.last_page;
 				this.total = res.data.total;
 				this.perPage = res.data.per_page;
@@ -202,9 +201,10 @@ export default {
 		},
 		
 		// 跳转到商品详情页
-		toGoodsDetail() {
+		toGoodsDetail(id) {
+			console.log('查看id',id)
 			uni.navigateTo({
-				url:'/pages/goods/detail'
+				url:'/pages/goods/detail?id=' + id
 			})
 		}
 		
