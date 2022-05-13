@@ -2,10 +2,11 @@
 <template>
 	<view class="detail-wrap">
 		<!-- 标题栏 -->
-		<view class="nav-box">
-			<view :style="{ height: navbarHeight + 'px' }">
+		<view class="nav-box" :style="{'top':backtop}">
+			<view>
 				<view hover-class="back-hover" class="back-box u-m-x-30 u-flex u-row-center u-col-center" @tap="goBack">
-					<view class="u-iconfont uicon-arrow-left" style="color: #fff;font-size: 28rpx;"></view>
+					<!-- <view class="u-iconfont uicon-arrow-left" style="color: #fff;font-size: 28rpx;"></view> -->
+					<u-icon name="arrow-left" color="#fff" size="22"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -14,6 +15,11 @@
 			<view class="detail-content">
 				<!-- 轮播 -->
 				<u-swiper :height="750" borderRadius="0" :list="goodsInfo.images" indicator-pos="bottomRight" mode="number" :interval="3000"></u-swiper>
+			
+				<!-- 价格卡片组 -->
+				<sh-price-card v-if="goodsInfo.id" :detail="goodsInfo" @change="getActivityRules"></sh-price-card>
+				
+				
 			</view>
 		</view>
 		
@@ -24,37 +30,66 @@
 
 <script>
 let systemInfo = uni.getSystemInfoSync();
+import shPriceCard from './components/sh-price-card.vue';
 	
 export default {
+	components: {
+		shPriceCard,
+	},
 	
 	data() {
 		return {
 			gs_id: 0, // 商品id
-			goodsInfo: []
+			goodsInfo: [],
+			activityRules: {},
+			backtop:'',
 		}
 	},
 	
 	onLoad(options) {
 		this.gs_id = options.id
 		this.getGoodsDetail()
+		this.getCapsule()
 	},
 	
-	computed: {
-		navbarHeight() {
-			// #ifdef APP-PLUS || H5
-			return 48;
-			// #endif
-			// #ifdef MP
-			let height = systemInfo.platform == 'ios' ? 44 : 48;
-			return height;
-			// #endif
-		}
-	},
+	// computed: {
+	// 	navbarHeight() {
+	// 		// #ifdef APP-PLUS || H5
+	// 		return 48;
+	// 		// #endif
+	// 		// #ifdef MP
+	// 		let height = systemInfo.platform == 'ios' ? 44 : 48;
+	// 		return height;
+	// 		// #endif
+	// 	}
+	// },
 	
 	methods: {
 		// 返回
 		goBack() {
 			uni.navigateBack();
+		},
+		
+		getActivityRules(e) {
+			if (e) {
+				this.activityRules = JSON.parse(e);
+			}
+		},
+		
+		//适配
+		getCapsule() {
+			//获取胶囊位置并改变顶部自定义导航栏的位置
+			let menuButtonInfo = uni.getMenuButtonBoundingClientRect();
+			console.log(menuButtonInfo, '胶囊top位置')
+			//让自定义导航栏头部组件始终和胶囊对齐 做到兼容各手机型号
+			this.backtop = menuButtonInfo.top+'px';
+			// if(menuButtonInfo.top<48) {
+			// 	this.bannertop = '100rpx'	
+			// }
+			// if(menuButtonInfo.top >=48) {
+			// 	this.bannertop = (menuButtonInfo.top) + 'px'
+			// }
+			
 		},
 		
 		// 商品详情
@@ -69,8 +104,8 @@ export default {
 			method: 'GET',
 			header: {  
 				'content-type': 'application/json', 
-			 'Authorization' : 'Bearer ' + uni.getStorageSync('token')
-			  },   
+				'Authorization' : 'Bearer ' + uni.getStorageSync('token')
+			},   
 			   data: params,
 			   success: (res) => {
 				   that.goodsInfo = res.data.data
@@ -91,7 +126,9 @@ export default {
 .nav-box {
 	position: fixed;
 	width: 100%;
-	min-height: 140rpx;
+	// height: 32px;
+	// background-color: red;
+	// min-height: 140rpx;
 	z-index: 888;
 	top: 0;
 	.back-box {
@@ -99,16 +136,16 @@ export default {
 		width: 60rpx;
 		height: 60rpx;
 		border-radius: 50%;
-		margin-top: 14rpx;
+		// margin-top: 14rpx;
 	}
 	.back-hover {
 		background-color: rgba(#fff, 0.18);
 	}
 	.state-hack {
 		width: 100%;
-		height: var(--status-bar-height);
+		// height: var(--status-bar-height);
 		/* #ifdef H5 */
-		height: 20rpx;
+		// height: 20rpx;
 		/* #endif */
 	}
 }
@@ -379,4 +416,51 @@ export default {
 		}
 	}
 }
+
+/* ==================
+    当前页面追加样式
+ ==================== */
+ .u-m-x-30 {
+   margin-left: 30rpx !important;
+   margin-right: 30rpx !important;
+ }
+ .u-flex {
+ 
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: flex;
+ 
+   -webkit-box-orient: horizontal;
+   -webkit-box-direction: normal;
+   -webkit-flex-direction: row;
+           flex-direction: row;
+   -webkit-box-align: center;
+   -webkit-align-items: center;
+           align-items: center;
+ }
+ .u-row-center {
+   -webkit-box-pack: center;
+   -webkit-justify-content: center;
+           justify-content: center;
+ }
+ .u-col-center {
+   -webkit-box-align: center;
+   -webkit-align-items: center;
+           align-items: center;
+ }
+ .u-iconfont {
+ 	position: relative;
+ 	display: -webkit-box;
+ 	display: -webkit-flex;
+ 	display: flex;
+ 	text-rendering: auto;
+ 	font-family: "uicon-iconfont" !important;
+ 	font-size: 16px;
+ 	font-style: normal;
+ 	-webkit-font-smoothing: antialiased;
+ 	-moz-osx-font-smoothing: grayscale;
+ }
+ .uicon-arrow-left:before {
+ 	content: "\e60e";
+ }
 </style>
