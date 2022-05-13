@@ -19,8 +19,38 @@
 				<!-- 价格卡片组 -->
 				<sh-price-card v-if="goodsInfo.id" :detail="goodsInfo" @change="getActivityRules"></sh-price-card>
 				
+				<!-- 标题 -->
+				<view class="u-m-b-10 title-box u-p-20 u-skeleton-fillet">
+					<view class="goods-title u-m-b-10 u-ellipsis-2">{{ goodsInfo.title }}</view>
+					<!-- <view class="sub-title u-ellipsis-2">{{ goodsInfo.content }}</view> -->
+				</view>
+				
+				<view class="tab-detail u-p-20 u-m-b-10">
+					<!-- 详情富文本 -->
+					<view class="rich-box"><u-parse :html="goodsInfo.content"></u-parse></view>
+				</view>
 				
 			</view>
+			
+			<!-- 商品foot -->
+			<view class="tabbar-foot safe-area-inset-bottom">
+				<view class="detail-foot_box safe-area-inset-bottom u-flex u-col-ceter u-row-around">
+					<!-- foot左侧 -->
+					<view class="left u-flex">
+						<view class="tools-item u-flex-col u-row-center u-col-center" @tap="goHome">
+							<image class="tool-img shopro-selector-circular" src="/static/images/tabbar/tabbar_home1.png" mode=""></image>
+							<text class="tool-title shopro-selector-rect">首页</text>
+						</view>
+					</view>
+					<!-- foot右侧 -->
+					<view class="detail-right">
+						<!-- 正常按钮 -->
+						<view class="detail-btn-box u-flex u-row-around">
+							<button class=" u-reset-button tool-btn pay-btn" @tap="goPay">立即购买</button>
+						</view>
+					</view>
+				</view>
+			</view>	
 		</view>
 		
 		
@@ -70,6 +100,13 @@ export default {
 			uni.navigateBack();
 		},
 		
+		goHome() {
+			console.log('进来了么')
+			uni.navigateTo({
+				url:'/pages/index/index'
+			})
+		},
+		
 		getActivityRules(e) {
 			if (e) {
 				this.activityRules = JSON.parse(e);
@@ -82,14 +119,7 @@ export default {
 			let menuButtonInfo = uni.getMenuButtonBoundingClientRect();
 			console.log(menuButtonInfo, '胶囊top位置')
 			//让自定义导航栏头部组件始终和胶囊对齐 做到兼容各手机型号
-			this.backtop = menuButtonInfo.top+'px';
-			// if(menuButtonInfo.top<48) {
-			// 	this.bannertop = '100rpx'	
-			// }
-			// if(menuButtonInfo.top >=48) {
-			// 	this.bannertop = (menuButtonInfo.top) + 'px'
-			// }
-			
+			this.backtop = menuButtonInfo.top+'px';		
 		},
 		
 		// 商品详情
@@ -463,4 +493,18 @@ export default {
  .uicon-arrow-left:before {
  	content: "\e60e";
  }
+ .u-m-b-10 {
+   margin-bottom: 10rpx !important;
+ }
+ .u-p-20 {
+   padding: 20rpx !important;
+ }
+.u-ellipsis-2 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 </style>
