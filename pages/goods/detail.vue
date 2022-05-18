@@ -25,6 +25,12 @@
 					<!-- <view class="sub-title u-ellipsis-2">{{ goodsInfo.content }}</view> -->
 				</view>
 				
+				<view class="tab-box u-flex">
+					<view class="tab-item u-flex-col u-row-center u-col-center">
+						<view class="tab-title">商品详情</view>
+					</view>
+				</view>
+				
 				<view class="tab-detail u-p-20 u-m-b-10">
 					<!-- 详情富文本 -->
 					<view class="rich-box"><u-parse :html="goodsInfo.content"></u-parse></view>
@@ -37,9 +43,9 @@
 				<view class="detail-foot_box safe-area-inset-bottom u-flex u-col-ceter u-row-around">
 					<!-- foot左侧 -->
 					<view class="left u-flex">
-						<view class="tools-item u-flex-col u-row-center u-col-center" @tap="goHome">
-							<image class="tool-img shopro-selector-circular" src="/static/images/tabbar/tabbar_home1.png" mode=""></image>
-							<text class="tool-title shopro-selector-rect">首页</text>
+						<view class="tools-item u-flex-col u-row-center">
+							<image class="tool-img shopro-selector-circular" src="/static/images/tabbar/tabbar_cart1.png" mode=""></image>
+							<!-- <text class="tool-title shopro-selector-rect">首页</text> -->
 						</view>
 					</view>
 					<!-- foot右侧 -->
@@ -101,10 +107,14 @@ export default {
 		},
 		
 		goHome() {
-			console.log('进来了么')
-			uni.navigateTo({
-				url:'/pages/index/index'
-			})
+			uni.navigateBack();
+			// uni.navigateTo({
+			// 	url:'/pages/public/search'
+			// })
+		},
+		
+		goPay() {
+			
 		},
 		
 		getActivityRules(e) {
@@ -199,7 +209,7 @@ export default {
 .tab-box {
 	height: 102rpx;
 	background: #fff;
-	border-bottom: 1rpx solid rgba(#dfdfdf, 0.8);
+	border-top: 1rpx solid rgba(#dfdfdf, 0.8);
 	margin-top: 10rpx;
 
 	.tab-item {
@@ -342,7 +352,7 @@ export default {
 	.tools-item {
 		flex: 1;
 		height: 100%;
-
+		margin-left: 36rpx;
 		.tool-img {
 			width: 46rpx;
 			height: 46rpx;

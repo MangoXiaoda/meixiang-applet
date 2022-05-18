@@ -10,7 +10,7 @@
 						:style="{ backgroundColor: '#FF5854', color: '#fff' }">热销</view>
 					{{ title }}
 				</view>
-				<view v-show="subtitle" class="subtitle-text u-m-b-10 u-ellipsis-1">{{ subtitle }}</view>
+				<view class="subtitle-text u-m-b-10 u-ellipsis-1">剩余 {{ total }}</view>
 			</view>
 			
 	<!-- 		<view class="u-m-b-20" v-if="tagTextList.length">
@@ -86,6 +86,10 @@
 				default: ''
 			},
 			subtitle: {
+				type: String,
+				default: ''
+			},
+			total: {
 				type: String,
 				default: ''
 			},

@@ -29,6 +29,7 @@
 					:originPrice="item.cost_price"
 					:sales="item.sales"
 					:tagTextList="item.activity_discounts_tags"
+					:total="item.total"
 					@click="toGoodsDetail(item.id)"
 				></sh-goods-card>
 			</block>
